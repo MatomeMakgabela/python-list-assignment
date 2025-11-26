@@ -1,0 +1,49 @@
+import os
+import requests
+
+def fetch_image():
+    print("Ubuntu Image Fetcher — 'I am because we are'")
+    image_url = input("Enter the URL of the image you want to download: ").strip()
+
+    # Directory creation (Community + Sharing)
+    folder_name = "Fetched_Images"
+    os.makedirs(folder_name, exist_ok=True)
+
+    try:
+        # Fetching the image (Respectful connection)
+        response = requests.get(image_url, timeout=10)
+        response.raise_for_status()  # Checks for HTTP errors
+
+        # Determine filename
+        if "/" in image_url and "." in image_url.split("/")[-1]:
+            filename = image_url.split("/")[-1]
+        else:
+            filename = "downloaded_image.jpg"  # Fallback name
+
+        file_path = os.path.join(folder_name, filename)
+
+        # Save image in binary mode
+        with open(file_path, "wb") as file:
+            file.write(response.content)
+
+        print(f"Image successfully fetched and saved as: {file_path}")
+
+    except requests.exceptions.MissingSchema:
+        print("❌ Invalid URL. Please provide a proper image link.")
+
+    except requests.exceptions.ConnectionError:
+        print("❌ Connection failed. Please check your internet connection.")
+
+    except requests.exceptions.Timeout:
+        print("❌ The request timed out. Try again later.")
+
+    except requests.exceptions.HTTPError as http_err:
+        print(f"❌ HTTP Error: {http_err}")
+
+    except Exception as e:
+        print(f"❌ An unexpected error occurred: {e}")
+
+
+# Run program
+if __name__ == "__main__":
+    fetch_image()
