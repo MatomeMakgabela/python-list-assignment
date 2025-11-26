@@ -1,0 +1,44 @@
+# -------------------------------
+# Task 1: Load and Explore Dataset
+# -------------------------------
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1. Load CSV dataset with error handling
+try:
+    df = pd.read_csv("data.csv")   # ← Replace with your CSV file name
+    print("Dataset loaded successfully.\n")
+except FileNotFoundError:
+    print("❌ Error: The file was not found. Please check the file name.")
+    raise
+except Exception as e:
+    print("❌ An unexpected error occurred:", e)
+    raise
+
+# 2. Show first rows
+print("📌 First 5 rows:")
+display(df.head())
+
+# 3. Check structure and missing values
+print("\n📌 Dataset info:")
+print(df.info())
+
+print("\n📌 Missing values:")
+print(df.isnull().sum())
+
+# 4. Clean dataset (fill missing values or drop)
+df = df.dropna()     # Alternatively: df.fillna(0)
+print("\n📌 Missing values after cleaning:")
+print(df.isnull().sum())
+
+
+# -------------------------------
+# Task 2: Basic Data Analysis
+# -------------------------------
+
+# 1. Basic statistics
+print("\n📌 Summary Statistics:")
+display(df.describe())
+
+# 
