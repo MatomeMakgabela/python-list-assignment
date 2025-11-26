@@ -1,0 +1,67 @@
+# -------------------------------
+# File Handling & Error Handling Assignment
+# -------------------------------
+
+def read_and_modify_file(input_file, output_file):
+    """
+    Reads text from input_file, converts it to uppercase,
+    then writes the modified text to output_file.
+    """
+    try:
+        with open(input_file, "r") as file:
+            content = file.read()
+
+        modified_content = content.upper()
+
+        with open(output_file, "w") as new_file:
+            new_file.write(modified_content)
+
+        print(f"Success! Modified content written to: {output_file}")
+
+    except FileNotFoundError:
+        print("Error: The input file you specified does not exist.")
+    except PermissionError:
+        print("Error: You do not have permission to read/write one of the files.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+
+# -------------------------------
+# Error Handling Lab
+# -------------------------------
+
+def user_file_reader():
+    """
+    Asks the user for a filename, tries to read it,
+    and handles errors gracefully.
+    """
+    filename = input("Enter the filename you want to read: ")
+
+    try:
+        with open(filename, "r") as file:
+            print("\n---- File Content Start ----\n")
+            print(file.read())
+            print("\n---- File Content End ----")
+
+    except FileNotFoundError:
+        print("Error: File not found. Please check the name and try again.")
+    except UnicodeDecodeError:
+        print("Error: The file cannot be decoded. It may not be a text file.")
+    except PermissionError:
+        print("Error: You do not have permission to open this file.")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+
+
+# -------------------------------
+# Program Execution
+# -------------------------------
+
+print("=== File Read & Write Challenge ===")
+input_file = input("Enter the input filename to read: ")
+output_file = input("Enter the output filename to write modified content to: ")
+
+read_and_modify_file(input_file, output_file)
+
+print("\n=== Error Handling Lab ===")
+user_file_reader()
